@@ -3,7 +3,7 @@ import logging
 import code.game as GAME_CODE
 
 logger = logging.getLogger(__name__)
-logger.setLevel(logging.DEBUG)
+loggerㅋ.setLevel(logging.DEBUG)
 stream_handler = logging.StreamHandler()
 stream_handler.setFormatter(logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s'))
 logger.addHandler(stream_handler)
@@ -46,32 +46,39 @@ def updown(say, recognize, success, fail):
 
 
 def gugudan(say, recognize, success, fail):
+    # 2~15단 곱셈 문제
     upper_limit = 15
     lower_limit = 2
-    while True:  # 일단 2~15단 안에서???
+    
+    while True:
         n1 = random.randint(lower_limit, upper_limit)
         n2 = random.randint(lower_limit, upper_limit)
         ans = n1 * n2
 
-        # n1곱하기n2는? 이라고 말해야하는데 저 숫자 어떻게말하지
+        # n1 곱하기 n2는? 말하기
         say(GAME_CODE.GUGUDAN.EXPRESSION.format(n1, n2))
 
         text = recognize()
         logging.info('You said: "%s"' % text)
 
-        if check_word(text, GAME_CODE.MAIN.END):
-            break
+        # text(문자) -> myans(숫자)
+        try:
+            myans=int(text)
+            if myans == ans:
+                success()
+                say(GAME_CODE.MAIN.SUCCESS)
+            else:
+                fail()
+                say(GAME_CODE.MAIN.WRONG)
 
-        elif text == ans:  # 이거도 어떻게.....??
-            success()
-            say(GAME_CODE.MAIN.SUCCESS)
-
-        else:
-            fail()
-            say(GAME_CODE.MAIN.WRONG)
+        # text가 숫자가 아닐 때    
+        except ValueError as e:
+            if check_word(text, GAME_CODE.MAIN.END):
+                break
 
 
 def deohagi(say, recognize, success, fail):
+    # 세 자리 이하 수 덧셈 문제
     upper_limit = 999
     lower_limit = 1
 
@@ -80,22 +87,23 @@ def deohagi(say, recognize, success, fail):
         n2 = random.randint(lower_limit, upper_limit)
         ans = n1 + n2
 
-        # n1더하기n2는?
+        # n1 더하기 n2는? 말하기
         say(GAME_CODE.DEOHAGI.EXPRESSION.format(n1, n2))
 
         text = recognize()
         logging.info('You said: "%s"' % text)
 
-        if check_word(text, GAME_CODE.MAIN.END):
-            break
+        # text(문자) -> myans(숫자)
+        try:
+            myans=int(text)
+            if myans == ans:
+                success()
+                say(GAME_CODE.MAIN.SUCCESS)
+            else:
+                fail()
+                say(GAME_CODE.MAIN.WRONG)
 
-        elif text == ans:
-            success()
-            say(GAME_CODE.MAIN.SUCCESS)
-
-        else:
-            fail()
-            say(GAME_CODE.MAIN.WRONG)
-
-
-
+        # text가 숫자가 아닐 때    
+        except ValueError as e:
+            if check_word(text, GAME_CODE.MAIN.END):
+                break
