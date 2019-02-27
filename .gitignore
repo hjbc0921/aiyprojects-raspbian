@@ -5,3 +5,5 @@ __pycache__
 .debhelper
 docs/_build
 src/tests/images/*.jpg
+env
+venv
