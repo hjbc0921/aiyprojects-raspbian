@@ -2,7 +2,7 @@
 import logging
 
 from random import randint
-from code.error_code import *
+import string.error_code as code
 
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.DEBUG)
@@ -32,11 +32,11 @@ class Gugudan:
                 input = int(input)
             except ValueError as e:
                 logging.error(e)
-                raise ValueError(NOT_NUMBER)
+                raise ValueError(code.NOT_NUMBER)
 
         if self.first_operand is None or self.second_operand is None:
             logging.error('Invalid execution: check run before start')
-            raise Exception(TRY_AGAIN)
+            raise Exception(code.TRY_AGAIN)
 
         result = self.first_operand * self.second_operand == input
         logger.info('{} : {} * {} == {}'.format(result, self.first_operand, self.second_operand, input))
