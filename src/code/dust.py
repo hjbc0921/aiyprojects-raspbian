@@ -1,11 +1,15 @@
+#!/usr/bin/env python3
+
 
 class State:
     SEOUL = ('서울')
     JEJU = ('제주')
+    DAEJEON = ('대전')
 
     list = {
         'seoul': SEOUL,
-        'jeju': JEJU
+        'jeju': JEJU,
+        'daejeon': DAEJEON
     }
 
 
@@ -30,3 +34,16 @@ class Color:
     VERY_BAD = RED
 
     list = (GOOD, AVERAGE, BAD, VERY_BAD)
+
+
+class Main:
+    NAME = '미세먼지'
+    ON = ('켜')
+    OFF = ('꺼')
+
+    # second
+    DELAY = 3
+
+    TURN_OFF = '미세먼지 라이트를 종료합니다'
+
+

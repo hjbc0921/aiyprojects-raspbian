@@ -1,11 +1,12 @@
+#!/usr/bin/env python3
 
 
-class UPDOWN:
-    UP = 'Up',
+class Updown:
+    UP = 'Up'
     DOWN = 'Down'
 
 
-class MAIN:
+class Main:
     WRONG = '틀렸습니다'
     SUCCESS = '정답입니다'
     END = ('그만', '끝')
@@ -14,9 +15,9 @@ class MAIN:
     UPDOWN = '업다운'
 
 
-class GUGUDAN:
+class Gugudan:
     EXPRESSION = '{} 곱하기 {}은?'
 
 
-class DEOHAGI:
+class Deohagi:
     EXPRESSION = '{} 더하기 {}은?'

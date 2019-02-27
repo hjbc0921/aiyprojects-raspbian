@@ -20,13 +20,14 @@ import logging
 
 from aiy.cloudspeech import CloudSpeechClient
 import aiy.voice.tts
-from aiy.leds import (Leds, Pattern, RgbLeds, Color)
+from aiy.leds import (Leds, Color)
 
 from controller.game import (updown, deohagi, gugudan)
 from controller.music import play_music
 from controller.dust import dust
 
-import code.game as GAME_CODE
+import code.game as game_code
+import code.dust as dust_code
 
 
 def get_hints(language_code):
@@ -90,7 +91,7 @@ def main():
             text = hear()
             logging.info('You said: "%s"' % text)
 
-            if GAME_CODE.MAIN.GUGUDAN in text:
+            if game_code.Main.GUGUDAN in text:
                 leds.update(Leds.rgb_on(Color.GREEN))
                 play_music(1)
                 say("Start gugudan")
@@ -99,7 +100,7 @@ def main():
 
                 play_music(2)
 
-            elif GAME_CODE.MAIN.DEOHAGI in text:
+            elif game_code.Main.DEOHAGI in text:
                 leds.update(Leds.rgb_on(Color.PURPLE))
                 play_music(1)
                 say("Start deohagi")
@@ -107,7 +108,7 @@ def main():
                 deohagi(say, hear, success, fail)
 
                 play_music(2)
-            elif GAME_CODE.MAIN.UPDOWN in text:
+            elif game_code.Main.UPDOWN in text:
                 leds.update(Leds.rgb_on(Color.YELLOW))
                 play_music(1)
                 say("Start updown")
@@ -116,7 +117,7 @@ def main():
 
                 play_music(2)
 
-            elif '미세먼지' in text:
+            elif dust_code.Main.NAME in text:
                 def turn_on(color):
                     leds.update(Leds.rgb_on(color))
 
@@ -126,7 +127,7 @@ def main():
                 dust(text, say, turn_on, turn_off)
 
             # 끝내기
-            elif check_word(text, GAME_CODE.MAIN.END):
+            elif check_word(text, game_code.Main.END):
                 break
             
             # 그 외의 것 말함 (없는 명령어)

@@ -1,3 +1,4 @@
+import os
 import pygame
 import logging
 
@@ -7,6 +8,9 @@ stream_handler = logging.StreamHandler()
 stream_handler.setFormatter(logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s'))
 logger.addHandler(stream_handler)
 
+file_dir = os.path.realpath(__file__)
+music_dir = os.path.normpath(os.path.join(file_dir, '../../../static/music'))
+
 
 def play_music(music_number):
     pygame.init()
@@ -14,19 +18,19 @@ def play_music(music_number):
     if music_number == 1:
         # 게임 시작할 때 -> 피카츄
         logger.info('Game Start : Pikachu!')
-        pygame.mixer.music.load("pikachu.mp3")
+        pygame.mixer.music.load(os.path.join(music_dir, 'pikachu.mp3'))
         pygame.mixer.music.play(0)
 
     elif music_number == 2:
         # 게임 끝날 때 -> 피카피피카츄
         logger.info('Game Finished : Pikapi-Pikachu!')
-        pygame.mixer.music.load("pikapi_pikachu.mp3")
+        pygame.mixer.music.load(os.path.join(music_dir, 'pikapi_pikachu.mp3'))
         pygame.mixer.music.play(0)
 
     elif music_number == 3:
         # 못 알아 들었을 때 -> 피카피카
         logger.info('Unknown Command : Pika-Pika!')
-        pygame.mixer.music.load("pika_pika.mp3")
+        pygame.mixer.music.load(os.path.join(music_dir, 'pika_pika.mp3'))
         pygame.mixer.music.play(0)
 
     else:
