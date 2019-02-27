@@ -17,43 +17,16 @@
 import argparse
 import locale
 import logging
-import time
 
 from aiy.cloudspeech import CloudSpeechClient
 import aiy.voice.tts
 from aiy.leds import (Leds, Pattern, RgbLeds, Color)
 
 from controller.game import (updown, deohagi, gugudan)
+from controller.music import play_music
+from controller.dust import dust
+
 import code.game as GAME_CODE
-
-import pygame
-
-
-def play_music(music_number):
-    pygame.init()
-    
-    if music_number == 1:
-        # 게임 시작할 때 -> 피카츄
-        logging.info('Game Start : Pikachu!')
-        pygame.mixer.music.load("pikachu.mp3")
-        pygame.mixer.music.play(0)
-
-    elif music_number == 2:
-        # 게임 끝날 때 -> 피카피피카츄
-        logging.info('Game Finished : Pikapi-Pikachu!')
-        pygame.mixer.music.load("pikapi_pikachu.mp3")
-        pygame.mixer.music.play(0)
-
-    elif music_number == 3:
-        # 못 알아 들었을 때 -> 피카피카
-        logging.info('Unknown Command : Pika-Pika!')
-        pygame.mixer.music.load("pika_pika.mp3")
-        pygame.mixer.music.play(0)
-
-    else:
-        logging.info('Wrong music number')
-
-    pygame.quit()
 
 
 def get_hints(language_code):
@@ -121,20 +94,36 @@ def main():
                 leds.update(Leds.rgb_on(Color.GREEN))
                 play_music(1)
                 say("Start gugudan")
+
                 gugudan(say, hear, success, fail)
+
                 play_music(2)
+
             elif GAME_CODE.MAIN.DEOHAGI in text:
                 leds.update(Leds.rgb_on(Color.PURPLE))
                 play_music(1)
                 say("Start deohagi")
+
                 deohagi(say, hear, success, fail)
+
                 play_music(2)
             elif GAME_CODE.MAIN.UPDOWN in text:
                 leds.update(Leds.rgb_on(Color.YELLOW))
                 play_music(1)
                 say("Start updown")
+
                 updown(say, hear, success, fail)
+
                 play_music(2)
+
+            elif '미세먼지' in text:
+                def turn_on(color):
+                    leds.update(Leds.rgb_on(color))
+
+                def turn_off():
+                    leds.update(Leds.rgb_off())
+
+                dust(text, say, turn_on, turn_off)
 
             # 끝내기
             elif check_word(text, GAME_CODE.MAIN.END):

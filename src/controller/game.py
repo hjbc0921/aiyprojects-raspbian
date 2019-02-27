@@ -3,7 +3,7 @@ import logging
 import code.game as GAME_CODE
 
 logger = logging.getLogger(__name__)
-loggerㅋ.setLevel(logging.DEBUG)
+logger.setLevel(logging.DEBUG)
 stream_handler = logging.StreamHandler()
 stream_handler.setFormatter(logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s'))
 logger.addHandler(stream_handler)
