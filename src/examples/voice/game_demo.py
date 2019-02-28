@@ -48,7 +48,7 @@ def say(text):
     aiy.voice.tts.say(text)
 
 
-def recognize (client, hints, language):
+def recognize(client, hints, language):
     text = None
     while not text:
         if hints:
@@ -83,16 +83,18 @@ def main():
 
         def success():
             leds.update(Leds.rgb_on(Color.BLUE))
+            logging.info('SUCCESS')
 
         def fail():
             leds.update(Leds.rgb_on(Color.RED))
+            logging.info('FAIL')
 
         while True:
             text = hear()
             logging.info('You said: "%s"' % text)
 
             if game_code.Main.GUGUDAN in text:
-                leds.update(Leds.rgb_on(Color.GREEN))
+                leds.update(Leds.rgb_on(Color.CYAN))
                 play_music(1)
                 say("Start gugudan")
 
@@ -100,7 +102,7 @@ def main():
 
                 play_music(2)
 
-            elif game_code.Main.DEOHAGI in text:
+            elif check_word(text, game_code.Main.DEOHAGI):
                 leds.update(Leds.rgb_on(Color.PURPLE))
                 play_music(1)
                 say("Start deohagi")
@@ -108,8 +110,8 @@ def main():
                 deohagi(say, hear, success, fail)
 
                 play_music(2)
-            elif game_code.Main.UPDOWN in text:
-                leds.update(Leds.rgb_on(Color.YELLOW))
+            elif check_word(text, game_code.Main.UPDOWN):
+                leds.update(Leds.rgb_on(Color.WHITE))
                 play_music(1)
                 say("Start updown")
 

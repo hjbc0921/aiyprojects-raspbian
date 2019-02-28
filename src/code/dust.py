@@ -5,11 +5,13 @@ class State:
     SEOUL = ('서울')
     JEJU = ('제주')
     DAEJEON = ('대전')
+    BUSAN = ('부산')
 
     list = {
         'seoul': SEOUL,
         'jeju': JEJU,
-        'daejeon': DAEJEON
+        'daejeon': DAEJEON,
+        'busan': BUSAN
     }
 
 
@@ -42,7 +44,7 @@ class Main:
     OFF = ('꺼')
 
     # second
-    DELAY = 3
+    DELAY = 60 * 60
 
     TURN_OFF = '미세먼지 라이트를 종료합니다'
 

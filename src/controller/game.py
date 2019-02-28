@@ -3,6 +3,7 @@ import random
 import logging
 import code.game as game_code
 import code.error_code as error_code
+import model.parser as parser
 
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.DEBUG)
@@ -34,18 +35,22 @@ def updown(say, recognize, success, fail):
         except ValueError:
             if check_word(guess_ans, game_code.Main.END):
                 break
+            guess_ans = parser.text_to_number(guess_ans)
+
+        if guess_ans == -1:
             logger.error(error_code.NOT_NUMBER)
+            say("I can not understand")
             continue
 
         # updown 의 경우에는 답을 맞출때까지 끝낼 수 없다고 가정
         if guess_ans > final_ans:
             fail()
-            say(game_code.Updown.UP)
+            say(game_code.Updown.DOWN)
             count += 1
 
         elif guess_ans < final_ans:
             fail()
-            say(game_code.Updown.DOWN)
+            say(game_code.Updown.UP)
             count += 1
 
         elif guess_ans == final_ans:
@@ -57,7 +62,7 @@ def updown(say, recognize, success, fail):
 
 def gugudan(say, recognize, success, fail):
     # 2~15단 곱셈 문제
-    upper_limit = 15
+    upper_limit = 9
     lower_limit = 2
     
     while True:
@@ -68,28 +73,35 @@ def gugudan(say, recognize, success, fail):
         # n1 곱하기 n2는? 말하기
         say(game_code.Gugudan.EXPRESSION.format(n1, n2))
 
-        text = recognize()
-        logging.info('You said: "%s"' % text)
+        my_ans = recognize()
+        logging.info('You said: "%s"' % my_ans)
 
         # text(문자) -> myans(숫자)
         try:
-            myans=int(text)
-            if myans == ans:
+            my_ans = int(my_ans)
+            # text가 숫자가 아닐 때
+        except ValueError:
+            if check_word(my_ans, game_code.Main.END):
+                break
+            my_ans = parser.text_to_number(my_ans)
+
+        if my_ans == -1:
+            logger.error(error_code.NOT_NUMBER)
+            say("I can not understand")
+            continue
+
+        if my_ans == ans:
                 success()
                 say(game_code.Main.SUCCESS)
-            else:
-                fail()
-                say(game_code.Main.WRONG)
+        else:
+            fail()
+            say(game_code.Main.WRONG)
 
-        # text가 숫자가 아닐 때    
-        except ValueError as e:
-            if check_word(text, game_code.Main.END):
-                break
 
 
 def deohagi(say, recognize, success, fail):
     # 세 자리 이하 수 덧셈 문제
-    upper_limit = 999
+    upper_limit = 9
     lower_limit = 1
 
     while True:
@@ -100,27 +112,33 @@ def deohagi(say, recognize, success, fail):
         # n1 더하기 n2는? 말하기
         say(game_code.Deohagi.EXPRESSION.format(n1, n2))
 
-        text = recognize()
-        logging.info('You said: "%s"' % text)
+        my_ans = recognize()
+        logging.info('You said: "%s"' % my_ans)
 
         # text(문자) -> myans(숫자)
         try:
-            myans=int(text)
-            if myans == ans:
-                success()
-                say(game_code.Main.SUCCESS)
-            else:
-                fail()
-                say(game_code.Main.WRONG)
-
-        # text가 숫자가 아닐 때    
+            my_ans = int(my_ans)
+            # text가 숫자가 아닐 때
         except ValueError:
-            if check_word(text, game_code.Main.END):
+            if check_word(my_ans, game_code.Main.END):
                 break
+            my_ans = parser.text_to_number(my_ans)
+
+        if my_ans == -1:
+            logger.error(error_code.NOT_NUMBER)
+            say("I can not understand")
+            continue
+
+        if my_ans == ans:
+            success()
+            say(game_code.Main.SUCCESS)
+        else:
+            fail()
+            say(game_code.Main.WRONG)
 
 
 if __name__ == '__main__':
-    updown(lambda x: print(x),
-            lambda: input('say: '),
-            lambda: print('SUCCESS'),
-            lambda: print('FAIL'))
+    gugudan(lambda x: print('<<<<<<<< {}'.format(x)),
+            lambda: input('>>>>>>>> '),
+            lambda: print('<<<<<< 성공했습니다' + '\n' + '****** 초록불 깜빡깜빡 ******'),
+            lambda: print('<<<<<< 실패했습니다' + '\n' + '****** 빨간불 깜빡깜빡 ******'))
