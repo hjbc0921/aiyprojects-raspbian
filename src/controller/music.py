@@ -13,7 +13,7 @@ music_dir = os.path.normpath(os.path.join(file_dir, '../../../static/music'))
 
 
 def play_music(music_number):
-    pygame.init()
+    pygame.mixer.init()
 
     if music_number == 1:
         # 게임 시작할 때 -> 피카츄
@@ -24,6 +24,7 @@ def play_music(music_number):
     elif music_number == 2:
         # 게임 끝날 때 -> 피카피피카츄
         logger.info('Game Finished : Pikapi-Pikachu!')
+        print(os.path.join(music_dir, 'pikapi_pikachu.mp3'))
         pygame.mixer.music.load(os.path.join(music_dir, 'pikapi_pikachu.mp3'))
         pygame.mixer.music.play(0)
 
@@ -36,4 +37,9 @@ def play_music(music_number):
     else:
         logger.info('Wrong music number')
 
-    pygame.quit()
+    while pygame.mixer.music.get_busy():
+        pygame.time.Clock().tick(10)
+        
+    pygame.mixer.quit()
+
+    
