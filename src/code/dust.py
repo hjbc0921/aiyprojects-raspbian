@@ -42,7 +42,7 @@ class Main:
     OFF = ('꺼')
 
     # second
-    DELAY = 3
+    DELAY = 60 * 60
 
     TURN_OFF = '미세먼지 라이트를 종료합니다'
 
