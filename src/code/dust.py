@@ -5,11 +5,13 @@ class State:
     SEOUL = ('서울')
     JEJU = ('제주')
     DAEJEON = ('대전')
+    BUSAN = ('부산')
 
     list = {
         'seoul': SEOUL,
         'jeju': JEJU,
-        'daejeon': DAEJEON
+        'daejeon': DAEJEON,
+        'busan': BUSAN
     }
 
 

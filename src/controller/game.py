@@ -39,6 +39,7 @@ def updown(say, recognize, success, fail):
 
         if guess_ans == -1:
             logger.error(error_code.NOT_NUMBER)
+            say("I can not understand")
             continue
 
         # updown 의 경우에는 답을 맞출때까지 끝낼 수 없다고 가정
@@ -61,7 +62,7 @@ def updown(say, recognize, success, fail):
 
 def gugudan(say, recognize, success, fail):
     # 2~15단 곱셈 문제
-    upper_limit = 15
+    upper_limit = 9
     lower_limit = 2
     
     while True:
@@ -86,6 +87,7 @@ def gugudan(say, recognize, success, fail):
 
         if my_ans == -1:
             logger.error(error_code.NOT_NUMBER)
+            say("I can not understand")
             continue
 
         if my_ans == ans:
@@ -99,7 +101,7 @@ def gugudan(say, recognize, success, fail):
 
 def deohagi(say, recognize, success, fail):
     # 세 자리 이하 수 덧셈 문제
-    upper_limit = 999
+    upper_limit = 9
     lower_limit = 1
 
     while True:
@@ -124,6 +126,7 @@ def deohagi(say, recognize, success, fail):
 
         if my_ans == -1:
             logger.error(error_code.NOT_NUMBER)
+            say("I can not understand")
             continue
 
         if my_ans == ans:
