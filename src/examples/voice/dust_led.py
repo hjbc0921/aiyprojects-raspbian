@@ -38,7 +38,7 @@ def locale_language():
 
 
 def dust(data) :
-    with Leds as leds :
+    with Leds() as leds :
         if(0 < int(data) <= 30) :
             aiy.voice.tts.say("Very Good")
             leds.update(Leds.rgb_on(Color.GREEN))
