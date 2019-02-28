@@ -1,9 +1,14 @@
 # AIY Projects for DWG Team 1
 
+![img](./static/img.jpeg)
+
 ## Members
 @koseoyoung @joowce @JaneYi @hjbc0921
 
 ## Newly added functions
+* 지역별 미세먼지 레벨
+* 게임 (더하기, 구구단, 업다운)
+* 피카츄 소리
 
 ## Overview
 
